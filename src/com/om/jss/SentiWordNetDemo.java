@@ -119,7 +119,7 @@ public class SentiWordNetDemo {
 		String pathToSWN = "resources/synset_rated.txt";
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
 		String testString = "they murder.";
-		StanfordPosTaggerDemo tagger = new StanfordPosTaggerDemo();
+		PosTagger tagger = new PosTagger();
 		String[] tokens = tagger.convertToSimpleTags(tagger.tagString(testString)).split(" ");
 		Double finalScore = 0.0;
 		for(String token : tokens){

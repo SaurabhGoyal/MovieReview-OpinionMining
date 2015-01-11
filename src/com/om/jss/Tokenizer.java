@@ -10,7 +10,7 @@ import edu.stanford.nlp.process.CoreLabelTokenFactory;
 import edu.stanford.nlp.process.DocumentPreprocessor;
 import edu.stanford.nlp.process.PTBTokenizer;
 
-public class StanfordTokenizerDemo {
+public class Tokenizer {
 
 	public static void getTokens(String filePath) throws FileNotFoundException {
 		PTBTokenizer<CoreLabel> ptbTokenizer = new PTBTokenizer<CoreLabel>(

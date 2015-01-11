@@ -29,8 +29,8 @@ public class Utility {
 	public static double performOM(String filePath) throws IOException{
 		String pathToSWN = "resources/synset_rated.txt";
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
-		StanfordPosTaggerDemo tagger = new StanfordPosTaggerDemo();
-		List<List<String>> doc = StanfordTokenizerDemo.getSentences(filePath);
+		PosTagger tagger = new PosTagger();
+		List<List<String>> doc = Tokenizer.getSentences(filePath);
 		double docScore = 0.0;
 		int numberOfSentences = doc.size();
 		for (List<String> sentence : doc) {

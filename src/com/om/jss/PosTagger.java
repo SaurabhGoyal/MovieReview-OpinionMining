@@ -2,10 +2,10 @@ package com.om.jss;
 
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
-public class StanfordPosTaggerDemo {
+public class PosTagger {
 	MaxentTagger tagger;
 
-	public StanfordPosTaggerDemo() {
+	public PosTagger() {
 		tagger = new MaxentTagger(
 				"resources/models/english-left3words-distsim.tagger");
 	}
@@ -45,7 +45,7 @@ public class StanfordPosTaggerDemo {
 	}
 
 	public static void main(String... s) {
-		StanfordPosTaggerDemo ptdemo = new StanfordPosTaggerDemo();
+		PosTagger ptdemo = new PosTagger();
 		String original = "Hi, what are you going to do today?";
 		System.out.println("original:\n" + original);
 		String taggedString = ptdemo.tagString(original);
