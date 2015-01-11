@@ -1,5 +1,7 @@
 package com.om.jss;
 
+import java.io.IOException;
+
 import edu.stanford.nlp.tagger.maxent.MaxentTagger;
 
 public class PosTagger {
@@ -44,9 +46,9 @@ public class PosTagger {
 		return simpleTaggedString.toString();
 	}
 
-	public static void main(String... s) {
+	public static void main(String... s) throws IOException {
 		PosTagger ptdemo = new PosTagger();
-		String original = "Hi, what are you going to do today?";
+		String original = Utility.getString("resources/file.txt");
 		System.out.println("original:\n" + original);
 		String taggedString = ptdemo.tagString(original);
 		System.out.println("tagged:\n" + taggedString);
