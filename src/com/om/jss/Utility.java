@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class Utility {
+	
 	public static String preprocessFile(String filePath) throws IOException {
 		String processedFilePath = filePath.substring(0,
 				filePath.lastIndexOf('.'))
@@ -25,12 +26,12 @@ public class Utility {
 		return processedFilePath;
 	}
 
-	public static Double performOM(String filePath) throws IOException{
+	public static double performOM(String filePath) throws IOException{
 		String pathToSWN = "resources/synset_rated.txt";
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
 		StanfordPosTaggerDemo tagger = new StanfordPosTaggerDemo();
 		List<List<String>> doc = StanfordTokenizerDemo.getSentences(filePath);
-		Double docScore = 0.0;
+		double docScore = 0.0;
 		int numberOfSentences = doc.size();
 		for (List<String> sentence : doc) {
 			int numberOfWords = sentence.size();
@@ -38,9 +39,9 @@ public class Utility {
 			String simpleString = tagger.convertToSimpleTags(taggedString);
 			System.out.println(sentence.toString());
 			String[] tokens = simpleString.split("\\s+");
-			Double sentenceScore = 0.0;
+			double sentenceScore = 0.0;
 			for (String token : tokens) {
-				Double score = sentiWordNet.extract(token);
+				double score = sentiWordNet.extract(token);
 				sentenceScore += score;
 				//System.out.println(token + " ->" + score);
 			}
@@ -51,5 +52,13 @@ public class Utility {
 		docScore/=numberOfSentences;
 		System.out.println("doc score " + docScore);
 		return docScore;
+	}
+
+	public static String analyseScore(double score){
+		if(score < -0.5) return "strongly negative";
+		if(score < -0.1) return "negative";
+		if(score < 0.1) return "neutral";
+		if(score < 0.5) return "positive";
+		return "strongly positive";
 	}
 }
