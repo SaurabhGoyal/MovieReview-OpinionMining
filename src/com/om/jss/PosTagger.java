@@ -8,8 +8,7 @@ public class PosTagger {
 	MaxentTagger tagger;
 
 	public PosTagger() {
-		tagger = new MaxentTagger(
-				"resources/models/english-left3words-distsim.tagger");
+		tagger = new MaxentTagger("resources/models/english-left3words-distsim.tagger");
 	}
 
 	public String tagString(String textToTag) {

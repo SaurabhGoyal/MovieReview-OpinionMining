@@ -39,8 +39,38 @@ public class Utility {
 		return processedFilePath;
 	}
 
-	public static double performOM(String filePath) throws IOException {
-		String pathToSWN = "resources/synset_rated.txt";
+	public static double scoreSum(String filePath) throws IOException {
+		String pathToSWN = Constants.pathToSWN.getValue();
+		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
+		Lemmatizer lemmatizer = new Lemmatizer();
+		PosTagger tagger = new PosTagger();
+		List<List<String>> doc = Tokenizer.getSentences(filePath);
+		double docScore = 0.0;
+		int numberOfSentences = doc.size();
+		for (List<String> sentence : doc) {
+			//int numberOfWords = sentence.size();
+			List<String> lemmatizedString = lemmatizer.lemmatize(sentence.toString());
+			String taggedString = tagger.tagString(lemmatizedString.toString());
+			String simpleString = tagger.convertToSimpleTags(taggedString);
+			String[] tokens = simpleString.split("\\s+");
+			//System.out.println(simpleString.toString());
+			double sentenceScore = 0.0;
+			for (String token : tokens) {
+				double score = sentiWordNet.extract(token);
+				sentenceScore += score;
+				// System.out.println(token + " ->" + score);
+			}
+			// sentenceScore/=numberOfWords;
+			//System.out.println("sentence score " + sentenceScore + "\n");
+			docScore += sentenceScore;
+		}
+		docScore /= numberOfSentences;
+		//System.out.println("doc score " + docScore);
+		return docScore;
+	}
+	
+	public static double scoreAvgTotal(String filePath) throws IOException {
+		String pathToSWN = Constants.pathToSWN.getValue();
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
 		Lemmatizer lemmatizer = new Lemmatizer();
 		PosTagger tagger = new PosTagger();
@@ -52,7 +82,7 @@ public class Utility {
 			List<String> lemmatizedString = lemmatizer.lemmatize(sentence.toString());
 			String taggedString = tagger.tagString(lemmatizedString.toString());
 			String simpleString = tagger.convertToSimpleTags(taggedString);
-			System.out.println(lemmatizedString.toString());
+			//System.out.println(lemmatizedString.toString());
 			String[] tokens = simpleString.split("\\s+");
 			double sentenceScore = 0.0;
 			for (String token : tokens) {
@@ -60,12 +90,118 @@ public class Utility {
 				sentenceScore += score;
 				// System.out.println(token + " ->" + score);
 			}
-			// sentenceScore/=numberOfWords;
-			System.out.println("sentence score " + sentenceScore + "\n");
+			sentenceScore/=numberOfWords;
+			//System.out.println("sentence score " + sentenceScore + "\n");
 			docScore += sentenceScore;
 		}
 		docScore /= numberOfSentences;
-		System.out.println("doc score " + docScore);
+		//System.out.println("doc score " + docScore);
+		return docScore;
+	}
+	
+	public static double scoreAvgRespective(String filePath) throws IOException {
+		String pathToSWN = Constants.pathToSWN.getValue();
+		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
+		Lemmatizer lemmatizer = new Lemmatizer();
+		PosTagger tagger = new PosTagger();
+		List<List<String>> doc = Tokenizer.getSentences(filePath);
+		double docScore = 0.0;
+		int numberOfSentences = doc.size();
+		for (List<String> sentence : doc) {
+			int numberOfNeg = 0, numberOfPos = 0;
+			double negSentence = 0.0, posSentence = 0.0;
+			List<String> lemmatizedString = lemmatizer.lemmatize(sentence.toString());
+			String taggedString = tagger.tagString(lemmatizedString.toString());
+			String simpleString = tagger.convertToSimpleTags(taggedString);
+			//System.out.println(lemmatizedString.toString());
+			String[] tokens = simpleString.split("\\s+");
+			for (String token : tokens) {
+				double score = sentiWordNet.extract(token);
+				if(score<0){
+					negSentence += score;
+					numberOfNeg++;
+				}
+				else{
+					posSentence += score;
+					numberOfPos++;
+				}
+			}
+			negSentence /= numberOfNeg;
+			posSentence /= numberOfPos;
+			//System.out.println("sentence score " + sentenceScore + "\n");
+			docScore += (negSentence+posSentence);
+		}
+		docScore /= numberOfSentences;
+		//System.out.println("doc score " + docScore);
+		return docScore;
+	}
+	
+	public static double scoreSumAdjective(String filePath) throws IOException {
+		String pathToSWN = Constants.pathToSWN.getValue();
+		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
+		Lemmatizer lemmatizer = new Lemmatizer();
+		PosTagger tagger = new PosTagger();
+		List<List<String>> doc = Tokenizer.getSentences(filePath);
+		double docScore = 0.0;
+		int numberOfSentences = doc.size();
+		for (List<String> sentence : doc) {
+			//int numberOfWords = sentence.size();
+			List<String> lemmatizedString = lemmatizer.lemmatize(sentence.toString());
+			String taggedString = tagger.tagString(lemmatizedString.toString());
+			String simpleString = tagger.convertToSimpleTags(taggedString);
+			String[] tokens = simpleString.split("\\s+");
+			//System.out.println(simpleString.toString());
+			double sentenceScore = 0.0;
+			for (String token : tokens) {
+				if(!token.endsWith("#a")) continue;
+				double score = sentiWordNet.extract(token);
+				sentenceScore += score;
+				// System.out.println(token + " ->" + score);
+			}
+			// sentenceScore/=numberOfWords;
+			//System.out.println("sentence score " + sentenceScore + "\n");
+			docScore += sentenceScore;
+		}
+		docScore /= numberOfSentences;
+		//System.out.println("doc score " + docScore);
+		return docScore;
+	}
+	
+	public static double scoreAvgAdjective(String filePath) throws IOException {
+		String pathToSWN = Constants.pathToSWN.getValue();
+		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
+		Lemmatizer lemmatizer = new Lemmatizer();
+		PosTagger tagger = new PosTagger();
+		List<List<String>> doc = Tokenizer.getSentences(filePath);
+		double docScore = 0.0;
+		int numberOfSentences = doc.size();
+		for (List<String> sentence : doc) {
+			int numberOfNeg = 0, numberOfPos = 0;
+			double negSentence = 0.0, posSentence = 0.0;
+			List<String> lemmatizedString = lemmatizer.lemmatize(sentence.toString());
+			String taggedString = tagger.tagString(lemmatizedString.toString());
+			String simpleString = tagger.convertToSimpleTags(taggedString);
+			String[] tokens = simpleString.split("\\s+");
+			//System.out.println(simpleString.toString());
+			for (String token : tokens) {
+				if(!token.endsWith("#a")) continue;
+				double score = sentiWordNet.extract(token);
+				if(score<0){
+					negSentence += score;
+					numberOfNeg++;
+				}
+				else{
+					posSentence += score;
+					numberOfPos++;
+				}
+			}
+			negSentence /= numberOfNeg;
+			posSentence /= numberOfPos;
+			//System.out.println("sentence score " + sentenceScore + "\n");
+			docScore += (negSentence+posSentence);
+		}
+		docScore /= numberOfSentences;
+		//System.out.println("doc score " + docScore);
 		return docScore;
 	}
 

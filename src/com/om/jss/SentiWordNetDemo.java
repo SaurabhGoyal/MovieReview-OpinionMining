@@ -116,7 +116,7 @@ public class SentiWordNetDemo {
 	}
 
 	public static void main(String[] args) throws IOException {
-		String pathToSWN = "resources/synset_rated.txt";
+		String pathToSWN = Constants.pathToSWN.getValue();
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
 		String testString = "they murder.";
 		PosTagger tagger = new PosTagger();
