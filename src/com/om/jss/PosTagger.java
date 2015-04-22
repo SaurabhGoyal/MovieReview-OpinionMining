@@ -47,7 +47,7 @@ public class PosTagger {
 
 	public static void main(String... s) throws IOException {
 		PosTagger ptdemo = new PosTagger();
-		String original = Utility.getString("resources/file.txt");
+		String original = "They like me like a boy";
 		System.out.println("original:\n" + original);
 		String taggedString = ptdemo.tagString(original);
 		System.out.println("tagged:\n" + taggedString);

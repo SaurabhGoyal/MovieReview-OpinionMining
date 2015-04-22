@@ -1,0 +1,11 @@
+div {
+	margin-top: 20;
+	margin-left: 60;
+	margin-right: 60;
+}
+
+.middle {
+  position: relative;
+  top: 30%;
+  transform: translateY(-30%);
+}

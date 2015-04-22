@@ -1,0 +1,12 @@
+method : 0
+tp : 727, fn : 273, tn : 622, fp : 378
+method : 1
+tp : 727, fn : 273, tn : 640, fp : 360
+method : 2
+tp : 726, fn : 274, tn : 585, fp : 415
+method : 3
+tp : 734, fn : 266, tn : 575, fp : 425
+method : 4
+tp : 0, fn : 1000, tn : 1000, fp : 0
+method : 5
+tp : 545, fn : 455, tn : 771, fp : 229

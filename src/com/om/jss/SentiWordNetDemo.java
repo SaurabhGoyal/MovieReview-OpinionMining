@@ -93,7 +93,6 @@ public class SentiWordNetDemo {
 					sum += 1.0 / (double) setScore.getKey();
 				}
 				score /= sum;
-
 				dictionary.put(word, score);
 			}
 		} catch (Exception e) {
@@ -103,6 +102,7 @@ public class SentiWordNetDemo {
 				swnDataFile.close();
 			}
 		}
+	
 	}
 
 	public double extract(String word, String pos) {
@@ -118,7 +118,7 @@ public class SentiWordNetDemo {
 	public static void main(String[] args) throws IOException {
 		String pathToSWN = Constants.pathToSWN.getValue();
 		SentiWordNetDemo sentiWordNet = new SentiWordNetDemo(pathToSWN);
-		String testString = "they murder.";
+		String testString = "they murder her mother and kidnapped the boy";
 		PosTagger tagger = new PosTagger();
 		String[] tokens = tagger.convertToSimpleTags(tagger.tagString(testString)).split(" ");
 		Double finalScore = 0.0;
